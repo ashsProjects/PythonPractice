@@ -1,5 +1,6 @@
 import time
 import datetime
+import calendar
 #Use strptime to convert from string to a time object
 #Use strftime to convert from a time object to a string
 #Write a Python script to display the various Date Time formats
@@ -65,6 +66,34 @@ def select_all_sundays(year):
         lst.append(time.strftime("%d %B %Y",(time.strptime(str(year) + str(i), '%Y%j'))))
     for i in lst: print(i)
         
-select_all_sundays(2020)
+# select_all_sundays(2020)
+#--------------------------------------------------------------------------------------------------------------------------------
+
+# Calculate the number of months it takes to pay off a credit card
+def credit_card_debt(bal, ir, mp):
+    balance = bal
+    interest_rate = ir
+    monthly_payment = mp
+
+    today = datetime.date.today()
+    days_in_current_month = calendar.monthrange(today.year, today.month)[1]
+    days_until_EOM = days_in_current_month - today.day
+
+    start_date = today + datetime.timedelta(days=days_until_EOM + 1)
+    end_date = start_date
+
+    while balance > 0:
+        monthly_interset = (interest_rate / 12) * balance
+        balance += monthly_interset
+        balance -= monthly_payment
+        
+        balance = 0 if balance < 0 else round(balance, 2)
+        
+        print(end_date, balance)
+        
+        days_in_current_month = calendar.monthrange(end_date.year, end_date.month)[1]
+        end_date = end_date + datetime.timedelta(days=days_in_current_month)
+
+credit_card_debt(5000, 0.13, 500)
 
 
